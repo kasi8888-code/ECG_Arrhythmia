@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+:root {
+  /* Healthcare-focused color palette */
+  --color-primary: #1E40AF;
+  --color-primary-light: #3B82F6;
+  --color-success: #059669;
+  --color-warning: #D97706;
+  --color-danger: #DC2626;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-background: #F9FAFB;
+}
+
+/* Custom medical-grade styling */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+}
+
+/* Focus states for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Chart.js custom styling */
+.chartjs-tooltip {
+  font-family: var(--font-inter), 'Inter', sans-serif !important;
+}
+
+/* Animation for loading states */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Print styles for medical reports */
+@media print {
+  nav, footer, button {
+    display: none !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white;
+  }
+}
