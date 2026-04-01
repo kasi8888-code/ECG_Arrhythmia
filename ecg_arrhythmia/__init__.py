@@ -2,7 +2,7 @@
 ECG Arrhythmia Detection System
 
 A patient-safe arrhythmia detection system with:
-- Hybrid CNN + Engineered Features
+- Random forest+ Engineered Features
 - Calibrated confidence scores
 - Confidence-based referral mechanism
 - Grad-CAM explainability
