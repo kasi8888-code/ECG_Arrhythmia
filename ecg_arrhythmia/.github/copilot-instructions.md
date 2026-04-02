@@ -2,7 +2,7 @@
 
 ## Architecture Overview
 This is a **full-stack medical AI system** for ECG arrhythmia classification with:
-- **Python backend**: PyTorch hybrid CNN model + FastAPI REST API
+- **Python backend**: PyTorch 1D CNN Classifier model + FastAPI REST API
 - **Next.js frontend**: React 19 + Tailwind v4 web interface
 - **Key design principle**: Patient safety via confidence-based referral mechanism
 
@@ -86,7 +86,7 @@ All constants are centralized in [config.py](../config.py):
 | Endpoint | Method | Purpose |
 |----------|--------|---------|
 | `/predict` | POST | Single beat prediction |
-| `/predict_with_explanation` | POST | Prediction + Grad-CAM heatmap |
+| `/predict_with_explanation` | POST | Prediction + Signal Attention Heatmap |
 | `/predict_batch` | POST | Batch processing with summary |
 | `/class_info`, `/model_info` | GET | Metadata |
 
