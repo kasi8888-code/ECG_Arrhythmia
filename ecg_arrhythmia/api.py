@@ -23,10 +23,10 @@ app = FastAPI(
     title="ECG Arrhythmia Detection API",
     description="""
     Patient-safe ECG arrhythmia detection with:
-    - Hybrid CNN + Engineered Features
+    - 1D CNN Classifier + Engineered Features
     - Calibrated confidence scores
     - Confidence-based referral mechanism
-    - Grad-CAM explainability for every prediction
+    - Signal Attention Heatmap for every prediction
     """,
     version="1.0.0"
 )
@@ -155,7 +155,7 @@ async def predict(beat_input: BeatInput):
 @app.post("/predict_with_explanation", response_model=ExplanationResponse)
 async def predict_with_explanation(beat_input: BeatInput, include_visualization: bool = True):
     """
-    Predict with Grad-CAM explanation.
+    Predict with Signal Attention Heatmap explanation.
     
     - **signal**: ECG beat signal (187 samples)
     - **include_visualization**: Whether to include base64-encoded plot
@@ -285,7 +285,7 @@ async def get_model_info():
         'num_classes': config.NUM_CLASSES,
         'class_names': config.CLASS_NAMES,
         'referral_threshold': config.REFERRAL_THRESHOLD,
-        'model_type': 'Hybrid CNN + Engineered Features',
+        'model_type': '1D CNN Classifier + Engineered Features',
         'features': {
             'cnn_filters': config.CNN_FILTERS,
             'num_engineered_features': config.NUM_ENGINEERED_FEATURES,

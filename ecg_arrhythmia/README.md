@@ -4,9 +4,9 @@ A **reproducible, patient-safe ECG arrhythmia detection system** that classifies
 
 ## Key Features
 
-- **Hybrid Fusion Architecture**: Combines 1D CNN (learned morphological features) with engineered HRV/morphological features
+- **1D CNN + Feature Fusion Architecture**: Combines 1D CNN (learned morphological features) with engineered HRV/morphological features
 - **Confidence-Based Referral**: Low-confidence predictions are flagged for human review
-- **Grad-CAM Explainability**: Visual explanations for every prediction
+- **Signal Attention Heatmap**: Visual explanations for every prediction
 - **Patient-Wise Splitting**: Ensures no data leakage between train/val/test sets
 - **5-Class AAMI Standard Classification**:
   - Normal (N)
@@ -22,8 +22,8 @@ ecg_arrhythmia/
 ├── config.py              # Configuration settings
 ├── data_loader.py         # Data loading and patient-wise splitting
 ├── feature_engineering.py # HRV and morphological feature extraction
-├── model.py               # Hybrid CNN model architecture
-├── explainability.py      # Grad-CAM implementation
+├── model.py               # 1D CNN Classifier model architecture
+├── explainability.py      # Signal Attention Heatmap implementation
 ├── trainer.py             # Training pipeline
 ├── inference.py           # Inference with referral mechanism
 ├── visualization.py       # Plotting utilities
@@ -66,7 +66,7 @@ python main.py --mode train
 This will:
 1. Load and split data (patient-wise)
 2. Extract engineered features
-3. Train the hybrid CNN model
+3. Train the 1D CNN Classifier model
 4. Calibrate confidence scores
 5. Evaluate and save results
 
@@ -91,7 +91,7 @@ uvicorn api:app --host 0.0.0.0 --port 8000 --reload
 # API Endpoints:
 # GET  /                        - Health check
 # POST /predict                 - Single beat prediction
-# POST /predict_with_explanation - Prediction with Grad-CAM
+# POST /predict_with_explanation - Prediction with Signal Attention Heatmap
 # POST /predict_batch           - Batch predictions
 # GET  /class_info              - Class information
 # GET  /model_info              - Model configuration
@@ -140,8 +140,8 @@ Input Beat (187 samples) ──────────────────�
          │                             │
          ▼                             ▼
 ┌─────────────────┐           ┌─────────────────┐
-│   Prediction    │           │  Grad-CAM       │
-│   + Confidence  │           │  Explanation    │
+│   Prediction    │           │  Signal         │
+│   + Confidence  │           │  Attention Map  │
 └─────────────────┘           └─────────────────┘
 ```
 
@@ -175,7 +175,7 @@ if confidence < REFERRAL_THRESHOLD:
 
 ## Explainability
 
-Every prediction includes a Grad-CAM heatmap showing which parts of the ECG beat were most important for the classification:
+Every prediction includes a Signal Attention Heatmap showing which parts of the ECG beat were most important for the classification:
 
 ```python
 from inference import ECGArrhythmiaDetector

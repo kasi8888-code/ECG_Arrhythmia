@@ -307,7 +307,7 @@ def run_demo():
                 if report['needs_referral']:
                     print(f"  Referral Reason: {report['referral_reason']}")
         
-        print(f"\nGrad-CAM visualizations saved to {config.PLOTS_DIR}")
+        print(f"\nSignal Attention Heatmap visualizations saved to {config.PLOTS_DIR}")
         
     except FileNotFoundError:
         download_instructions()
@@ -337,7 +337,7 @@ def main():
     
     print("\n" + "="*60)
     print("ECG ARRHYTHMIA DETECTION SYSTEM")
-    print("Hybrid CNN + Engineered Features with Explainability")
+    print("1D CNN Classifier + Engineered Features with Explainability")
     print("="*60)
     
     if args.mode == 'train':

@@ -272,14 +272,14 @@ def train_xgboost(X_train, y_train, X_test, y_test):
 
 
 def train_cnn(waveforms, features, labels, feature_stats):
-    """Train the Hybrid CNN model (existing architecture)."""
+    """Train the 1D CNN Classifier model (existing architecture)."""
     import torch
     from model import HybridECGClassifier, TemperatureScaling
     from data_loader import compute_class_weights, create_data_loaders
     from trainer import Trainer, evaluate_model
 
     print("\n" + "-" * 50)
-    print("🧠 TRAINING: Hybrid CNN (1D CNN + Engineered Features)")
+    print("🧠 TRAINING: 1D CNN Classifier (1D CNN + Engineered Features)")
     print("-" * 50)
 
     # Prepare splits for data loader
@@ -400,7 +400,7 @@ def train_cnn(waveforms, features, labels, feature_stats):
         y_true, y_pred,
         np.array(train_labels_list), np.array(train_preds),
         train_time,
-        "Hybrid CNN"
+        "1D CNN Classifier"
     )
     results['epochs_trained'] = len(history.get('train_loss', []))
     results['best_val_accuracy'] = max(history.get('val_accuracy', [0]))
@@ -537,7 +537,7 @@ def main():
 
     print("\n" + "=" * 60)
     print("ECG ARRHYTHMIA DETECTION — ML MODEL COMPARISON")
-    print("Models: Random Forest, SVM, XGBoost, Hybrid CNN")
+    print("Models: Random Forest, SVM, XGBoost, 1D CNN Classifier")
     print("=" * 60)
 
     # Step 1: Load data and extract features

@@ -82,11 +82,11 @@ st.markdown("""
 
 @st.cache_resource
 def load_detector():
-    """Load CNN Hybrid model."""
+    """Load 1D CNN Classifier model."""
     for p in [config.MODEL_DIR / 'final_model.pt', config.MODEL_DIR / 'best_model.pt']:
         if p.exists():
             return ECGArrhythmiaDetector(model_path=p)
-    st.warning("⚠️ No trained CNN model found.")
+    st.warning("⚠️ No trained 1D CNN model found.")
     return ECGArrhythmiaDetector()
 
 @st.cache_resource
@@ -233,7 +233,7 @@ def get_decision_status(confidence, needs_referral):
         return "✅ Auto-Classified", "success"
 
 def plot_ecg_waveform(signal, title="ECG Waveform", heatmap=None):
-    """Plot ECG waveform with optional Grad-CAM overlay."""
+    """Plot ECG waveform with optional Signal Attention Heatmap overlay."""
     fig, ax = plt.subplots(figsize=(12, 4))
     
     time_ms = np.arange(len(signal)) / config.SAMPLING_RATE * 1000
@@ -287,7 +287,7 @@ def main():
         ML_MODELS = ["Random Forest (96.52%)", "XGBoost (95.47%)", "SVM (91.38%)"]
         selected_model = st.selectbox(
             "Choose inference model",
-            ML_MODELS + ["Hybrid CNN (72.38%)"],
+            ML_MODELS + ["1D CNN Classifier (72.38%)"],
             index=0,
             help="Random Forest is the most accurate model."
         )
@@ -298,7 +298,7 @@ def main():
             "Random Forest (96.52%)": ("96.52%", "🟢"),
             "XGBoost (95.47%)": ("95.47%", "🟢"),
             "SVM (91.38%)": ("91.38%", "🟡"),
-            "Hybrid CNN (72.38%)": ("72.38%", "🔴"),
+            "1D CNN Classifier (72.38%)": ("72.38%", "🔴"),
         }
         acc, badge = accuracy_map[selected_model]
         st.markdown(f"{badge} **Test Accuracy: {acc}**")
@@ -383,7 +383,7 @@ def show_dashboard():
     with col3:
         st.markdown("""
         ### 🧠 Explainable AI
-        - Grad-CAM visualizations
+        - Signal Attention Heatmap visualizations
         - Highlights important ECG regions
         - Builds trust in predictions
         - Aids clinical validation
@@ -455,7 +455,7 @@ def show_upload_page(detector):
                 analyze = st.button("Analyze ECG", type="primary", use_container_width=True)
 
             if analyze:
-                use_cnn = (selected_model == "Hybrid CNN (72.38%)")
+                use_cnn = (selected_model == "1D CNN Classifier (72.38%)")
                 with st.spinner("Analyzing ECG beat..."):
                     if use_cnn:
                         if detector is None:
@@ -538,13 +538,13 @@ def show_upload_page(detector):
                 plt.close(fig)
 
                 if heatmap is not None:
-                    st.subheader("Model Explanation (Grad-CAM)")
+                    st.subheader("Model Explanation (Signal Attention Heatmap)")
                     st.info("Highlighted regions show parts of the ECG that most influenced the model's decision.")
-                    fig = plot_ecg_waveform(signal, title="Grad-CAM Overlay", heatmap=heatmap)
+                    fig = plot_ecg_waveform(signal, title="Signal Attention Heatmap", heatmap=heatmap)
                     st.pyplot(fig)
                     plt.close(fig)
                 elif not use_cnn:
-                    st.info("Grad-CAM is only available for the Hybrid CNN model. Switch model in the sidebar to see it.")
+                    st.info("Signal Attention Heatmap is only available for the 1D CNN Classifier. Switch model in the sidebar to see it.")
 
                 if needs_ref:
                     st.divider()

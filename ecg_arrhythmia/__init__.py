@@ -2,10 +2,10 @@
 ECG Arrhythmia Detection System
 
 A patient-safe arrhythmia detection system with:
-- Random forest+ Engineered Features
+- Random Forest + Engineered Features
 - Calibrated confidence scores
 - Confidence-based referral mechanism
-- Grad-CAM explainability
+- Signal Attention Heatmap explainability
 """
 
 from .config import *

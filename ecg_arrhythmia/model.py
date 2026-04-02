@@ -1,5 +1,5 @@
 """
-Hybrid CNN Model for ECG Arrhythmia Detection
+1D CNN Classifier for ECG Arrhythmia Detection
 Combines 1D CNN (learned features) with engineered features (HRV/morphological)
 """
 import torch
@@ -87,7 +87,7 @@ class ECGCNNBackbone(nn.Module):
         
         Args:
             x: Input tensor (batch, 1, length)
-            return_feature_maps: If True, return intermediate feature maps for Grad-CAM
+            return_feature_maps: If True, return intermediate feature maps for attention heatmap
         
         Returns:
             Feature tensor (batch, output_dim)
@@ -110,7 +110,7 @@ class ECGCNNBackbone(nn.Module):
 
 class HybridECGClassifier(nn.Module):
     """
-    Hybrid model combining CNN features with engineered features.
+    1D CNN Classifier combining CNN features with engineered features.
     
     Architecture:
     1. CNN backbone extracts learned features from raw waveform
@@ -167,7 +167,7 @@ class HybridECGClassifier(nn.Module):
         # Classification head
         self.classifier = nn.Linear(fusion_hidden_dim // 2, num_classes)
         
-        # Store intermediate activations for Grad-CAM
+        # Store intermediate activations for Signal Attention Heatmap
         self.cnn_features = None
         self.feature_maps = None
     
@@ -334,7 +334,7 @@ def count_parameters(model: nn.Module) -> int:
 
 if __name__ == "__main__":
     # Test model
-    print("Testing HybridECGClassifier...")
+    print("Testing 1D CNN Classifier (HybridECGClassifier)...")
     
     model = HybridECGClassifier(
         input_length=187,
